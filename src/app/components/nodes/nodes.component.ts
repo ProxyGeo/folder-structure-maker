@@ -156,7 +156,6 @@ export class NodesComponent implements OnInit {
     };
     // initialize getNodesToRemove
     getNodesToRemove(node);
-
     // dispatch delete node[s] to nodeService
     // loop through nodesToRemove and delete
     for (const removeNode of nodesToRemove) {
@@ -168,14 +167,14 @@ export class NodesComponent implements OnInit {
 
   // handling of add node request to nodeService
   addNode(node: Node) {
-    this.nodeService.addNode(node).subscribe((newNode) => {
-      // add newNode to nodesGroups
-      this.addToNodeGroups(newNode);
-      // set setSelectedNodeParentId = '' from nodeSubjectService
-      this.nodeSubjectService.setSelectedNodeParentId('');
-      // set addRootNode = false
-      this.addRootNode = false;
-    });
+    // add newNode to nodesGroups
+    this.addToNodeGroups(node);
+    // dispatch addNode request
+    this.nodeService.addNode(node).subscribe();
+    // set setSelectedNodeParentId = '' from nodeSubjectService
+    this.nodeSubjectService.setSelectedNodeParentId('');
+    // set addRootNode = false
+    this.addRootNode = false;
   }
 
   // toggle add new root directory/node
