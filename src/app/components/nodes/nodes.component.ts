@@ -46,7 +46,9 @@ import { Node, NodeGroups } from '../../node';
   ],
 })
 export class NodesComponent implements OnInit {
+  // store nodes
   nodes: Node[] = [];
+  // store node groups
   nodeGroups: NodeGroups = { root: [] };
   addRootNode: boolean = false;
 
@@ -161,6 +163,14 @@ export class NodesComponent implements OnInit {
     };
     // initialize getNodesToRemove
     getNodesToRemove(node);
+    
+    /*
+    *
+    * JSON Sever use demo purpose only, to http request.
+    * DELETE request is done this way because JSON Server did not support remove many on single request
+    * Note: request to JSON Server crash on subsequent request but application will not be block 
+    *
+    */ 
     // dispatch delete node[s] to nodeService
     // loop through nodesToRemove and delete
     for (const removeNode of nodesToRemove) {
