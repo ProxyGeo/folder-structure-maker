@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <div class="toolbar">
+      <span>Folder Structure Maker</span>
+    </div>
+    <app-nodes></app-nodes>
+  `,
 })
-export class AppComponent {
-  title = 'folder-structure-maker';
-}
+export class AppComponent {}

@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    margin: 50px;
+}
+.toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    justify-content: center;
+  }
+ul {
+    margin: 0px 0px 0px 20px;
+    list-style: none;
+    line-height: 2em;
+    font-family: Arial;
+}
+ul li {
+    font-size: 16px;
+    position: relative;
+}
+ul li:before {
+    position: absolute;
+    left: -15px;
+    top: 0px;
+    content: "";
+    display: block;
+    border-left: 1px solid #ddd;
+    height: 1em;
+    border-bottom: 1px solid #ddd;
+    width: 10px;
+}
+ul li:after {
+    position: absolute;
+    left: -15px;
+    bottom: -7px;
+    content: "";
+    display: block;
+    border-left: 1px solid #ddd;
+    height: 100%;
+}
+ul li.root {
+    margin: 0px 0px 0px -20px;
+}
+ul li.root:before {
+    display: none;
+}
+ul li.root:after {
+    display: none;
+}
+ul li:last-child:after {
+    display: none;
+}
