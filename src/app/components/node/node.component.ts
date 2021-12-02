@@ -12,9 +12,11 @@ import { Node } from '../../node';
 @Component({
   selector: 'app-node',
   template: `
+    <!-- mouseenter/mouseleave event handling, to show/hide and and delete buttons -->
     <span (mouseenter)="toggleButtons()" (mouseleave)="toggleButtons()">
       <fa-icon [icon]="isTypeFolder(node.type) ? faFolder : faFile"></fa-icon>
       {{ node.name }}
+      <!-- show buttons when showButtons value is true  -->
       <span [hidden]="!showButtons">
         <button *ngIf="isTypeFolder(node.type)" (click)="handleAddClick(node)">
           <fa-icon [icon]="faPlus" [ngStyle]="{ color: 'white' }"></fa-icon>
@@ -45,22 +47,28 @@ export class NodeComponent implements OnInit {
   faPlus = faPlus;
   faDelete = faTrash;
 
+  // initialize service
   constructor(private nodeSubjectService: NodeSubjectService) {}
 
   ngOnInit(): void {}
 
-  isTypeFolder(type: string) {
+  // validate node type value is equal to 'folder' function
+  // return true/false
+  isTypeFolder(type: string): boolean {
     return type === 'folder';
   }
   
+  // set showButtons value to true/false
   toggleButtons() {
     this.showButtons = !this.showButtons
   }
 
+  // on add button click function set nodeSubjectService.selectedNodeParentId value to node.id
   handleAddClick(node: Node) {
     this.nodeSubjectService.setSelectedNodeParentId(node.id);
   }
 
+  // on delete button click function set nodeSubjectService.destroyNode value to node
   handleDeleteClick(node: Node) {
     this.nodeSubjectService.setDestroyNode(node);
   }

@@ -8,18 +8,23 @@ import { Node, NodeGroups } from '../../node';
   selector: 'app-nodes',
   template: `
     <div>
+      <!-- show/hide add root folder template -->
       <button (click)="toggleAddRootNode()">Add root folder</button>
+      <!-- list nodeGroups['root'] group -->
       <ul *ngFor="let node of nodeGroups['root']">
         <li class="root">
           <app-node [node]="node"></app-node>
         </li>
+        <!-- if root node has group from nodeGroups create app-node-children -->
         <app-node-children
           *ngIf="nodeGroups[node.id]"
           [children]="nodeGroups[node.id]"
           [nodeGroups]="nodeGroups"
         ></app-node-children>
+        <!-- bind app-add-node-child here, will display on add new node-child to selected root-node  -->
         <app-add-node-child [parentId]="node.id"></app-add-node-child>
       </ul>
+      <!-- bind app-add-node here, will display on add new root node  -->
       <app-add-node
         *ngIf="addRootNode"
         [type]="'folder'"

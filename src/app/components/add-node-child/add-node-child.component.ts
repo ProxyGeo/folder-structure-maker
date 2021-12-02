@@ -7,13 +7,16 @@ import { Node } from '../../node';
 @Component({
   selector: 'app-add-node-child',
   template: `
+    <!-- if parent id and selected node parent id is equal display template -->
     <li *ngIf="parentId === selectedNodeParentId">
+      <!-- if node type is valid display app-add-node -->
       <app-add-node 
         *ngIf="isValidNodeType(nodeType)"
         [type]="nodeType"
         (onClose)="onCloseBtnClick()"
         (onAdd)="onAddBtnClick()"
       ></app-add-node>
+      <!-- if node type is empty/invalid display show selection of node type template -->
       <div class="type-selector" *ngIf="!isValidNodeType(nodeType)">
         <button (click)="onFolderBtnClick()">
           <fa-icon [icon]="faFolder"></fa-icon> folder
@@ -56,30 +59,41 @@ export class AddNodeChildComponent implements OnInit {
   faFile = faFile;
   faTimes = faTimes;
 
+  // initialize service
   constructor(private nodeSubjectService: NodeSubjectService) {}
 
   ngOnInit(): void {
+    // initialize subscription to selectedNodeParentId from nodeSubjectService
     this.nodeSubjectService.selectedNodeParentId.subscribe((value) => {
       this.selectedNodeParentId = value;
     });
   }
 
-  isValidNodeType(type: string) {
+  // node type validate function
+  // return true/false
+  isValidNodeType(type: string): boolean {
     return Boolean(type);
   }
 
+  // set node type value to 'folder' function
   onFolderBtnClick() {
     this.nodeType = 'folder';
   }
 
+  // set node type value to 'file' function
   onFileBtnClick() {
     this.nodeType = 'file';
   }
 
+  // app-add-node (onAdd) output event function handling
+  // reset node type value to empty '' 
   onAddBtnClick() {
     this.nodeType = '';
   }
 
+  // app-add-node (onClose) output event function handling,
+  // and node type selection template for close button on-click handling
+  // reset node type value to empty '' and nodeSubjectService.selectedNodeParentId value to empty ''
   onCloseBtnClick() {
     this.nodeType = '';
     this.nodeSubjectService.setSelectedNodeParentId('');
