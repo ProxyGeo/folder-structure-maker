@@ -12,12 +12,11 @@ import { Node } from '../../node';
 @Component({
   selector: 'app-node',
   template: `
-    <!-- mouseenter/mouseleave event handling, to show/hide and and delete buttons -->
-    <span (mouseenter)="toggleButtons()" (mouseleave)="toggleButtons()">
+    <span class="node-wrapper">
       <fa-icon [icon]="isTypeFolder(node.type) ? faFolder : faFile"></fa-icon>
-      {{ node.name }}
-      <!-- show buttons when showButtons value is true  -->
-      <span [hidden]="!showButtons">
+      <p class="node-name">{{ node.name }}</p>
+      <!-- show buttons when on hover 'span.node-wrapper' -->
+      <span class="node-actions">
         <button *ngIf="isTypeFolder(node.type)" (click)="handleAddClick(node)">
           <fa-icon [icon]="faPlus" [ngStyle]="{ color: 'white' }"></fa-icon>
         </button>
@@ -28,6 +27,27 @@ import { Node } from '../../node';
     </span>
   `,
   styles: [
+    `
+      .node-wrapper {
+        display: flex;
+        align-items: center;
+      }
+    `,
+    `
+      .node-name {
+        margin: 0 4px;
+      }
+    `,
+    `
+      .node-actions {
+        display: none;
+      }
+    `,
+    `
+      .node-wrapper:hover > .node-actions {
+        display: block !important;
+      }
+    `,
     `
       button {
         background-color: black;
@@ -41,7 +61,6 @@ import { Node } from '../../node';
 })
 export class NodeComponent implements OnInit {
   @Input() node: Node = { id: '', name: '', type: '' };
-  showButtons: boolean = false;
   faFolder = faFolder;
   faFile = faFile;
   faPlus = faPlus;
@@ -56,11 +75,6 @@ export class NodeComponent implements OnInit {
   // return true/false
   isTypeFolder(type: string): boolean {
     return type === 'folder';
-  }
-  
-  // set showButtons value to true/false
-  toggleButtons() {
-    this.showButtons = !this.showButtons
   }
 
   // on add button click function set nodeSubjectService.selectedNodeParentId value to node.id
